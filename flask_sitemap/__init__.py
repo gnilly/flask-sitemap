@@ -164,12 +164,12 @@ class Sitemap(object):
             kwargs['page'] = 1
             yield {'loc': url_for('flask_sitemap.page', **kwargs)}
             sitemap_page_needed.send(current_app._get_current_object(),
-                                     page=1, urlset=urlset)
+                                     page=1, urlset=filter(None,urlset))
             for urlset_ in run:
                 kwargs['page'] += 1
                 yield {'loc': url_for('flask_sitemap.page', **kwargs)}
                 sitemap_page_needed.send(current_app._get_current_object(),
-                                         page=kwargs['page'], urlset=urlset_)
+                                         page=kwargs['page'], urlset=filter(None,urlset_))
 
         return render_template('flask_sitemap/sitemapindex.xml',
                                sitemaps=pages())
